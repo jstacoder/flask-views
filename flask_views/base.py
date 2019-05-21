@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, Session
 from flask.views import MethodView
 
 
@@ -108,3 +108,14 @@ class TemplateView(TemplateResponseMixin, View):
 
         """
         return self.render_to_response(self.get_context_data(**kwargs))
+
+
+class SessionViewMixin(object):
+    _session = None
+
+    @property
+    def session(self):
+        if SessionViewMixin._session is None:
+            SessionViewMixin._session = Session()
+        return SessionViewMixin._session
+
